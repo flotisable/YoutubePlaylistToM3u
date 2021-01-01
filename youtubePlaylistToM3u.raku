@@ -1,5 +1,3 @@
-my Str $file = "playlist.json";
-
 grammar JsonParser
 {
   token TOP               { '{' <data>+ % ',' '}' }
@@ -50,15 +48,21 @@ class JsonParserAction
   }
 }
 
-say "#EXTM3U";
-
-for $file.IO.lines -> $line
+sub MAIN( Str :o($output) )
 {
-  my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
+  my Str        $file         = "playlist.json";
+  my IO::Handle $outputHandle = $output ?? open( $output, :w ) !! $*OUT;
 
-  $data<title> ~~ s:g/\\u(<[0..9a..e]> ** 4)/{ hexToDec( ~$0 ).chr }/; # turn \uxxxx string to unicode character
-  say "#EXTINF:$data<duration>,$data<title>";
-  say "https://www.youtube.com.watch?v=$data<url>";
+  $outputHandle.say( "#EXTM3U" );
+
+  for $file.IO.lines -> $line
+  {
+    my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
+
+    $data<title> ~~ s:g/\\u(<[0..9a..e]> ** 4)/{ hexToDec( ~$0 ).chr }/; # turn \uxxxx string to unicode character
+    $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
+    $outputHandle.say( "https://www.youtube.com.watch?v=$data<url>" );
+  }
 }
 
 sub hexToDec( Str $hex )
