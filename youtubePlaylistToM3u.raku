@@ -49,9 +49,8 @@ class JsonParserAction
   }
 }
 
-sub MAIN( Str :o($output) )
+sub MAIN( Str :o(:$output), Str :f(:$file) = "playlist.json" )
 {
-  my Str        $file         = "playlist.json";
   my IO::Handle $outputHandle = $output ?? open( $output, :w ) !! $*OUT;
 
   $outputHandle.say( "#EXTM3U" );
