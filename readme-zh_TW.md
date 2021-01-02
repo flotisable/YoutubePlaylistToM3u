@@ -1,35 +1,35 @@
 # Youtube Playlist To M3u
-  Convert youtube playlist url to m3u file
+  將 youtube 播放清單網址轉換成 m3u 檔
 
-  [Traditional Chinese Readme](readme-zh_TW.md)
-
-## Requirement
+## 需求
    - [youtube-dl](https://github.com/ytdl-org/youtube-dl)
 
-## Motivation
-   I sometimes use **mpv** to play the faverite music playlist of my youtube account,
-   and the m3u file need to be updated manually to sync with the playlist.
-   Recently, I want to add new playlist for other types of music and I also start learning [Raku](https://www.raku.org/),
-   so I decide to write a sciprt to do that with the language.
+## 動機
+   我偶爾會用 **mpv** 來播我 youtube 帳號中的收藏的影片，
+   不過我必須手動改 m3u 檔案來跟這個播放清單同步。
+   最近我也想加一些其他的播放清單，加上有在開始學 [Raku](https://www.raku.org/)，
+   所以就想說用它來寫寫程式來做這件事
 
-   This script is written for the following purpose:
-   - update m3u file with script rather than manually
-   - practice the **Raku** programming language
-     - especially try the **grammar** build in Raku
+   這個程式主要的目的也就以下幾點
+   - 不須手動而是靠程式更新 m3u 檔
+   - 練習使用 **Raku**
+     - 尤其是試試它內建的 **grammar** 功能
 
-## Usage
-   The script can be used by giving one of the following
-   - the youtube playlist url
-     - though positional argument
-   - the json output from ```youtube-dl --flat-playlist -j```
-     - though ```-f``` option
-     - or from stdin
+## 使用
+   這個程式可以給下列其中一種輸入
+   - youtube 播放清單網址
+     - 直接當成參數
+   - ```youtube-dl --flat-playlist -j``` 的 json 輸出
+     - 用 ```-f``` 選項
+     - 或是從 stdin 輸入
 
-   The output will be printed out to stdout,
-   or we can use ```-o``` option to write to a file.
-   Note that output to stdout can produce garbled characters in **#EXTINF** line if the title of video uses unicode and the shell encoding is not unicode.
+   預設輸出是到 stdout，
+   可以用 ```-o``` 選項寫到檔案中。
+   要注意的是，
+   如果影片標題有使用 unicode 而 shell 不支援的話，
+   輸出的 **#EXTINF** 後面的標題會有亂碼出現
 
-## Example
+## 範例
    ```
    shell> raku youtubePlaylistToM3u.raku "https://www.youtube.com/playlist?list=PLcMKHw1SCSYyqOrTLthgY87q-lFu7o5ER"
    #EXTM3U
