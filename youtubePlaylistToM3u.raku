@@ -59,7 +59,7 @@ sub MAIN( Str :o(:$output), Str :f(:$file) = "playlist.json" )
   {
     my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
 
-    $data<title> ~~ s:g/\\u(<[0..9a..e]> ** 4)/{ hexToDec( ~$0 ).chr }/; # turn \uxxxx string to unicode character
+    $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ hexToDec( ~$0 ).chr }/; # turn \uxxxx string to unicode character
     $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
     $outputHandle.say( "https://www.youtube.com.watch?v=$data<url>" );
   }
