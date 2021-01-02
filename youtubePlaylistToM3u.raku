@@ -1,3 +1,4 @@
+#!/usr/bin/raku
 grammar JsonParser
 {
   token TOP               { '{' <data>+ % ',' '}' }
