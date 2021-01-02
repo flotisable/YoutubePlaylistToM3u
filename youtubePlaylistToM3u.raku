@@ -49,13 +49,18 @@ class JsonParserAction
   }
 }
 
-sub MAIN( Str :o(:$output), Str :f(:$file) = "playlist.json" )
+sub MAIN(
+  Str $playlistUrl?,  # = "https://www.youtube.com/playlist?list=PLcMKHw1SCSYyqOrTLthgY87q-lFu7o5ER",
+  Str :o(:$output),
+  Str :f(:$file),     # = "playlist.json",
+)
 {
+  my IO::Handle $inputHandle  = getInputHandle( $playlistUrl, $file );
   my IO::Handle $outputHandle = $output ?? open( $output, :w ) !! $*OUT;
 
   $outputHandle.say( "#EXTM3U" );
 
-  for $file.IO.lines -> $line
+  for $inputHandle.lines -> $line
   {
     my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
 
@@ -63,6 +68,13 @@ sub MAIN( Str :o(:$output), Str :f(:$file) = "playlist.json" )
     $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
     $outputHandle.say( "https://www.youtube.com.watch?v=$data<url>" );
   }
+}
+
+sub getInputHandle( Str $playlistUrl, Str $file )
+{
+  return run( "youtube-dl", "--flat-playlist", "-j", $playlistUrl, :out ).out with $playlistUrl;
+  return open( $file, :r ) with $file;
+  return $*IN;
 }
 
 sub hexToDec( Str $hex )
