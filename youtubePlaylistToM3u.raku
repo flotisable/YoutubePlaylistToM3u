@@ -5,7 +5,7 @@ grammar JsonParser
   token data              { \s* <key> \s* ':' \s* <value> \s* }
   token key               { \" \w+ \" }
   proto token value       { * }
-  token value:sym<string> { \" <-[ \" ]>+ \" }
+  token value:sym<string> { \" ( [ <-[ \" ]> | <?after '\\'> '"' ]+ ) \" }
   token value:sym<null>   { null }
   token value:sym<number> { \d+\.\d+ }
 }
@@ -29,7 +29,11 @@ class JsonParserAction
   {
     if ( $<key>.made eq "title" | "duration" | "url" )
     {
-      make $<key>.made => $<value>.made;
+      my $value = $<value>.made;
+
+      $value = 0 if not $value.defined and $<key>.made eq "duration";
+
+      make $<key>.made => $value;
     }
   }
 
@@ -40,7 +44,7 @@ class JsonParserAction
 
   method value:sym<string>( $/ )
   {
-    make $/.subst( '"', '', :g );
+    make $/[0].subst( '\\"', '"', :g );
   }
 
   method value:sym<number>( $/ )
