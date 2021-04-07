@@ -68,7 +68,7 @@ sub MAIN(
   {
     my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
 
-    $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ hexToDec( ~$0 ).chr }/; # turn \uxxxx string to unicode character
+    $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ utf8IntStringToChar( ~$0 ) }/; # turn \uxxxx string to unicode character
     $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
     $outputHandle.say( "https://www.youtube.com/watch?v=$data<url>" );
   }
@@ -79,6 +79,14 @@ sub getInputHandle( Str $playlistUrl, Str $file )
   return run( "youtube-dl", "--flat-playlist", "-j", $playlistUrl, :out ).out with $playlistUrl;
   return open( $file, :r ) with $file;
   return $*IN;
+}
+
+# not support 2 bit unicode character now
+sub utf8IntStringToChar( Str $numHex )
+{
+  my Int $numDec = hexToDec( $numHex );
+
+  return ( $numDec > 0xC000 ) ?? "" !! $numDec.chr;
 }
 
 sub hexToDec( Str $hex )
