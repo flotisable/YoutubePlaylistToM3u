@@ -82,24 +82,10 @@ sub getInputHandle( Str $playlistUrl, Str $file )
 }
 
 # not support 2 bit unicode character now
-sub utf8IntStringToChar( Str $numHex )
+sub utf8IntStringToChar( Str $numStr )
 {
-  my Int $numDec = hexToDec( $numHex );
+  my Int $num = $numStr.parse-base( 16 );
 
-  return ( $numDec > 0xC000 ) ?? "" !! $numDec.chr;
-}
-
-sub hexToDec( Str $hex )
-{
-  my %digitTable = ( ( '0'...'9', 'a'...'f' ) Z ( 0...15 ) ).flat;
-
-  my $dec = 0;
-  my @hex = $hex.flip.split( '', :skip-empty );
-  
-  loop ( my $i = 0; $i < @hex.elems ; ++$i )
-  {
-    $dec += %digitTable{@hex[$i]} * 16 ** $i;
-  }
-  return $dec;
+  return ( $num > 0xC000 ) ?? "" !! $num.chr;
 }
 # vim: filetype=perl6
