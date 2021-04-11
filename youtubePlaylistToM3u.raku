@@ -1,4 +1,28 @@
 #!/usr/bin/raku
+grammar JsonParser        { ... }
+class   JsonParserAction  { ... }
+
+sub MAIN(
+  Str $playlistUrl?,  # = "https://www.youtube.com/playlist?list=PLcMKHw1SCSYyqOrTLthgY87q-lFu7o5ER",
+  Str :o(:$output),
+  Str :f(:$file),     # = "playlist.json",
+)
+{
+  my IO::Handle $inputHandle  = getInputHandle( $playlistUrl, $file );
+  my IO::Handle $outputHandle = $output ?? open( $output, :w ) !! $*OUT;
+
+  $outputHandle.say( "#EXTM3U" );
+
+  for $inputHandle.lines -> $line
+  {
+    my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
+
+    $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ utf8IntStringToChar( ~$0 ) }/; # turn \uxxxx string to unicode character
+    $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
+    $outputHandle.say( "https://www.youtube.com/watch?v=$data<url>" );
+  }
+}
+
 grammar JsonParser
 {
   token TOP               { '{' <data>+ % ',' '}' }
@@ -50,27 +74,6 @@ class JsonParserAction
   method value:sym<number>( $/ )
   {
     make +$/;
-  }
-}
-
-sub MAIN(
-  Str $playlistUrl?,  # = "https://www.youtube.com/playlist?list=PLcMKHw1SCSYyqOrTLthgY87q-lFu7o5ER",
-  Str :o(:$output),
-  Str :f(:$file),     # = "playlist.json",
-)
-{
-  my IO::Handle $inputHandle  = getInputHandle( $playlistUrl, $file );
-  my IO::Handle $outputHandle = $output ?? open( $output, :w ) !! $*OUT;
-
-  $outputHandle.say( "#EXTM3U" );
-
-  for $inputHandle.lines -> $line
-  {
-    my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
-
-    $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ utf8IntStringToChar( ~$0 ) }/; # turn \uxxxx string to unicode character
-    $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
-    $outputHandle.say( "https://www.youtube.com/watch?v=$data<url>" );
   }
 }
 
