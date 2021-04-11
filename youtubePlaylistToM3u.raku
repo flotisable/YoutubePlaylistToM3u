@@ -6,9 +6,10 @@ sub MAIN(
   Str $playlistUrl?,  # = "https://www.youtube.com/playlist?list=PLcMKHw1SCSYyqOrTLthgY87q-lFu7o5ER",
   Str :o(:$output),
   Str :f(:$file),     # = "playlist.json",
+  Str :$ytdlExec      = "youtube-dl",
 )
 {
-  my IO::Handle $inputHandle  = getInputHandle( $playlistUrl, $file );
+  my IO::Handle $inputHandle  = getInputHandle( $ytdlExec, $playlistUrl, $file );
   my IO::Handle $outputHandle = $output ?? open( $output, :w ) !! $*OUT;
 
   $outputHandle.say( "#EXTM3U" );
@@ -77,9 +78,9 @@ class JsonParserAction
   }
 }
 
-sub getInputHandle( Str $playlistUrl, Str $file )
+sub getInputHandle( Str $ytdlExec, Str $playlistUrl, Str $file )
 {
-  return run( "youtube-dl", "--flat-playlist", "-j", $playlistUrl, :out ).out with $playlistUrl;
+  return run( $ytdlExec, "--flat-playlist", "-j", $playlistUrl, :out ).out with $playlistUrl;
   return open( $file, :r ) with $file;
   return $*IN;
 }
