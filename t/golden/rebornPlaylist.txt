@@ -1,0 +1,31 @@
+#EXTM3U
+#EXTINF:280,【家庭教師Reborn!】DIVE TO WORLD 【中日字幕】
+https://www.youtube.com/watch?v=HYB8x17Ijl4
+#EXTINF:219,【家庭教師Reborn!】EASY GO 【中日字幕】
+https://www.youtube.com/watch?v=4b6Y9huuOEE
+#EXTINF:275,【家庭教師Reborn!】last cross 【中日字幕】
+https://www.youtube.com/watch?v=F4qazr5HQ9k
+#EXTINF:247,【家庭教師Reborn!】すべり台【中日字幕】
+https://www.youtube.com/watch?v=0n9P2WrOfF8
+#EXTINF:270,【家庭教師Reborn!】アメあと 【中日字幕】
+https://www.youtube.com/watch?v=zIz85dwehIg
+#EXTINF:237,【家庭教師Reborn!】ファミリア【中日字幕】
+https://www.youtube.com/watch?v=qs20sdId6xU
+#EXTINF:266,【家庭教師Reborn!】桜ロック 【中日字幕】
+https://www.youtube.com/watch?v=-ykRO_IWbXs
+#EXTINF:249,【家庭教師Reborn!】CYCLE【中日字幕】
+https://www.youtube.com/watch?v=_W6bRS8nFqM
+#EXTINF:243,【家庭教師Reborn!】キャンバス 【中日字幕】
+https://www.youtube.com/watch?v=uTR03cPqf98
+#EXTINF:235,【家庭教師Reborn!】88 【中日字幕】
+https://www.youtube.com/watch?v=M2sws0PGdJg
+#EXTINF:248,【家庭教師Reborn!】BOYS & GIRLS 【中日字幕】
+https://www.youtube.com/watch?v=rmY_aySF90E
+#EXTINF:234,【家庭教師Reborn!】LISTEN TO THE STEREO【中日字幕】
+https://www.youtube.com/watch?v=OLXakRCP2Jw
+#EXTINF:215,【家庭教師Reborn!】Funny Sunny Day【中日字幕】
+https://www.youtube.com/watch?v=P7253KcNS6Q
+#EXTINF:256,【家庭教師Reborn!】Sakura addiction 【中日字幕】
+https://www.youtube.com/watch?v=_n3gGL4an7Y
+#EXTINF:114,Katekyo Hitman Reborn OST - Flame of Resolution
+https://www.youtube.com/watch?v=1vootQHhLRE
