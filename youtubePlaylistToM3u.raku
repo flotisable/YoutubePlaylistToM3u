@@ -32,7 +32,7 @@ grammar JsonParser
   proto token value       { * }
   token value:sym<string> { \" ( [ <-[ \" ]> | <?after '\\'> '"' ]+ ) \" }
   token value:sym<null>   { null }
-  token value:sym<number> { \d+\.\d+ }
+  token value:sym<number> { \d+[\.\d+]? }
 }
 
 class JsonParserAction
