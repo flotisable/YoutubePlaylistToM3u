@@ -92,4 +92,3 @@ sub utf8IntStringToChar( Str $numStr )
 
   return ( $num > 0xC000 ) ?? "" !! $num.chr;
 }
-# vim: filetype=perl6
