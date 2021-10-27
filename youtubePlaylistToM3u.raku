@@ -20,7 +20,7 @@ sub MAIN(
 
     $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ utf8IntStringToChar( ~$0 ) }/; # turn \uxxxx string to unicode character
     $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
-    $outputHandle.say( "https://www.youtube.com/watch?v=$data<url>" );
+    $outputHandle.say( "$data<url>" );
   }
 }
 
