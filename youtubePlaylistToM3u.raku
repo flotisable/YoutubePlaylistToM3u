@@ -28,11 +28,12 @@ grammar JsonParser
 {
   token TOP               { '{' <data>+ % ',' '}' }
   token data              { \s* <key> \s* ':' \s* <value> \s* }
-  token key               { \" \w+ \" }
+  token key               { '"' \w+ '"' }
   proto token value       { * }
-  token value:sym<string> { \" ( [ <-[ \" ]> | <?after '\\'> '"' ]+ ) \" }
+  token value:sym<string> { '"' ( [ <-[ " ]> | <?after '\\'> '"' ]+ ) '"' }
   token value:sym<null>   { null }
   token value:sym<number> { \d+[\.\d+]? }
+  token value:sym<array>  { '[' <-[ \[\] ]>* ']' }
 }
 
 class JsonParserAction
