@@ -20,7 +20,7 @@ sub MAIN(
 
     $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ utf8IntStringToChar( ~$0 ) }/; # turn \uxxxx string to unicode character
     $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
-    $outputHandle.say( "$data<url>" );
+    $outputHandle.say( getUrl( "$data<url>", $ytdlExec ) );
   }
 }
 
@@ -92,4 +92,10 @@ sub utf8IntStringToChar( Str $numStr )
   my Int $num = $numStr.parse-base( 16 );
 
   return ( $num > 0xC000 ) ?? "" !! $num.chr;
+}
+
+sub getUrl( Str $url, Str $ytdlExec )
+{
+  return 'https://www.youtube.com/watch?v=' ~ $url if $ytdlExec ~~ /youtube\-dl/;
+  return $url;
 }
