@@ -6,6 +6,8 @@
 ## Requirement
    - [youtube-dl](https://github.com/ytdl-org/youtube-dl)
 
+     or other **youtube-dl** compatible program, e.g. [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+
 ## Motivation
    I sometimes use **mpv** to play the faverite music playlist of my youtube account,
    and the m3u file need to be updated manually to sync with the playlist.
@@ -28,6 +30,8 @@
    The output will be printed out to stdout,
    or we can use ```-o``` option to write to a file.
    Note that output to stdout can produce garbled characters in **#EXTINF** line if the title of video uses unicode and the shell encoding is not unicode.
+
+   To use other **youtube-dl** compatible program, pass the program name to ```--ytdlExec``` option.
 
 ## Example
    ```

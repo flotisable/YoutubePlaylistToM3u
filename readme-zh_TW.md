@@ -4,6 +4,8 @@
 ## 需求
    - [youtube-dl](https://github.com/ytdl-org/youtube-dl)
 
+     或是其他與 **youtube-dl** 相容的程式，像是 [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+
 ## 動機
    我偶爾會用 **mpv** 來播我 youtube 帳號中的收藏的影片，
    不過我必須手動改 m3u 檔案來跟這個播放清單同步。
@@ -28,6 +30,8 @@
    要注意的是，
    如果影片標題有使用 unicode 而 shell 不支援的話，
    輸出的 **#EXTINF** 後面的標題會有亂碼出現
+
+   如果要使用其他與 **youtube-dl** 相容的程式，可以用 ```--ytdlExec``` 選項設定
 
 ## 範例
    ```
