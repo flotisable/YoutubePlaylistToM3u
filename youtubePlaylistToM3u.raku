@@ -81,7 +81,24 @@ class JsonParserAction
 
 sub getInputHandle( Str $ytdlExec, Str $playlistUrl, Str $file )
 {
-  return run( $ytdlExec, "--flat-playlist", "-j", $playlistUrl, :out ).out with $playlistUrl;
+  with $playlistUrl
+  {
+    if !run( $ytdlExec, "--version", :out, :err )
+    {
+      say   "Program '$ytdlExec' can not be executed!";
+      exit 1;
+    }
+    my $proc = run( $ytdlExec, "--flat-playlist", "-j", $playlistUrl, :out, :err );
+
+    if !$proc
+    {
+      say   "Fail in running $ytdlExec!";
+      say   "[$ytdlExec Error Message]";
+      print $proc.err.slurp;
+      exit 1;
+    }
+    return $proc.out;
+  }
   return open( $file, :r ) with $file;
   return $*IN;
 }
