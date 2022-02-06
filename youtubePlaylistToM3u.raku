@@ -19,8 +19,8 @@ sub MAIN(
     my $data = JsonParser.parse( $line, actions => JsonParserAction.new ).made;
 
     $data<title> ~~ s:g/\\u(<[0..9a..f]> ** 4)/{ utf8IntStringToChar( ~$0 ) }/; # turn \uxxxx string to unicode character
-    $outputHandle.say( "#EXTINF:$data<duration>,$data<title>"       );
-    $outputHandle.say( getUrl( "$data<url>", $ytdlExec ) );
+    $outputHandle.say( "#EXTINF:$data<duration>,$data<title>" );
+    $outputHandle.say( getUrl( "$data<url>", $ytdlExec )      );
   }
 }
 
