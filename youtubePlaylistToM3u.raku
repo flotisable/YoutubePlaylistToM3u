@@ -34,6 +34,7 @@ grammar JsonParser
   token value:sym<null>   { null }
   token value:sym<number> { \d+[\.\d+]? }
   token value:sym<array>  { '[' <-[ \[\] ]>* ']' }
+  token value:sym<object> { '{' <-[ \{\} ]>* '}' }
 }
 
 class JsonParserAction
